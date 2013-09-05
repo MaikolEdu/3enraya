@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	$('.cuadrado').on('click', tres.pulsar);
 
-	$('.limpiar').on('click', tres.empezar);
+	$('.limpiar').on('click', tres.constructor);
 
 });
 
@@ -15,7 +15,7 @@ var tres = {
 
 	matriz: [],
 
-	constructor: function limpiar() {
+	constructor: function() {
 		$('.cuadrado').each(function(){
 			$(this).removeClass('o');
 			$(this).removeClass('x');
@@ -25,7 +25,7 @@ var tres = {
 		tres.empezar();
 	},
 
-	empezar: function empezarPartida() {
+	empezar: function() {
 		
 		for(var i = 0; i < tres.tamano; i++) {
 			tres.matriz[i] = []
@@ -39,7 +39,7 @@ var tres = {
 		console.log(tres.matriz);
 	},
 
-	pulsar: function pulsaBoton() {
+	pulsar: function() {
 		$fila = $(this).data('fila');
 		$columna = $(this).data('columna');
 
@@ -74,8 +74,27 @@ var tres = {
 			if(tres.matriz[0][i] == -1 && tres.matriz[0][i]==tres.matriz[1][i] && tres.matriz[0][i]==tres.matriz[2][i] ) {
 				return tres.matriz[0][i];
 			}
-			return -1;
 		}
+		return -1;
+	},
+
+	min: function(){
+		if (tres.finPartida()) {
+			if (tres.ganar()!=-1) return 1;
+			else return 0;
+		}
+		var v=99;
+		for (var i = 0; i < tres.tamano; i++) {
+			for (var j = 0; j < tres.tamano; j++) {
+				if (tres.matriz[i][j]==-1) {
+					tres.matriz[i][j] = 0;
+					aux = this.max();
+					if (aux<v) v=aux;
+					tres.matriz[i][j] = -1;
+				}
+			}
+		}
+		return v;
 	}
 };
 
