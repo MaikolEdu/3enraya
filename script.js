@@ -88,7 +88,7 @@ var tres = {
 	},
 
 	finPartida: function() {
-		return tableroCompleto || tres.ganar != -1;
+		return tres.tableroCompleto || tres.ganar != -1;
 	},
 
 	ponerFichaPC: function() {
@@ -109,14 +109,34 @@ var tres = {
 						}
 						tres.matriz[i][j] = -1;
 					}
-					tres.matrizo[i][j] = 1;
+					tres.matriz[i][j] = 1;
 				}
 			}
-			matriz[f][c] = 1;
-			console.log(matriz[f][c]);
+			tres.matriz[f][c] = 1;
+			console.log(tres.matriz[f][c]);
 		}
 		ganador = tres.ganar();
 		console.log('asdasd');
+
+	},
+
+	min: function(){
+		if (tres.finPartida()) {
+			if (tres.ganar()!=-1) return 1;
+			else return 0;
+		}
+		var v=99;
+		for (var i = 0; i < tres.tamano; i++) {
+			for (var j = 0; j < tres.tamano; j++) {
+				if (tres.matriz[i][j]==-1) {
+					tres.matriz[i][j] = 0;
+					aux = this.max();
+					if (aux<v) v=aux;
+					tres.matriz[i][j] = -1;
+				}
+			}
+		}
+	    return -1;	
 	},
 	
 	max: function() {
