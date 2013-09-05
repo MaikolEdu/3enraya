@@ -1,8 +1,10 @@
 $(document).ready(function(){
 
+	tres.empezar();
+
 	$('.cuadrado').on('click', tres.pulsar);
 
-	$('.limpiar').on('click', tres.constructor);
+	$('.limpiar').on('click', tres.empezar);
 
 });
 
@@ -20,7 +22,7 @@ var tres = {
 			$(this).text("");
 		});
 
-		tres.empezar;
+		tres.empezar();
 	},
 
 	empezar: function empezarPartida() {
@@ -33,22 +35,33 @@ var tres = {
 		}
 
 		tres.ganador = -1;
+
+		console.log(tres.matriz);
 	},
 
-	pulsar: function pulsaBoton() {
+	pulsar: function pulsaBoton(event) {
 		$fila = $(this).data('fila');
 		$columna = $(this).data('columna');
 
 		$this = $(this);
 
 		if ( $this.text() == '' ) {
-
-			$('.limpiar').on('click', tres.constructor);
+			// event.preventDefault();
 			$this.text('o');
 			$this.addClass('o');
 		}
 
-		console.log($(this).data());
+		if ( tres.ganador == -1 ) {
+			tres.matriz[$fila][$columna] = 0;
+		}
+
+		ganar();
+
+		console.log(tres.matriz);
+	},
+
+	ganar: function() {
+		
 	}
 };
 
