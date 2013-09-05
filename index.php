@@ -1,5 +1,6 @@
 <?php
 require("TresEnRaya.class.php");
+session_start();
 ?>
 <html>
 <head>
@@ -17,8 +18,7 @@ require("TresEnRaya.class.php");
 <h1>Juego 3 en Raya</h1>
 <hr noshade size="-1" color="blue">
 <h2>Lutry Edition</h2>
-<?php 
-session_start();
+<?php
 if (empty($_SESSION['Juego'])) { 
 	$_SESSION['Juego'] = new TresEnRaya();
 }

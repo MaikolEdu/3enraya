@@ -1,0 +1,35 @@
+body {
+	width: 650px;
+	margin: 30px auto;
+	background: #000;
+}
+
+.cuadrado {
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	vertical-align: top;
+	background: white;
+}
+.borde {
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;
+}
+
+.o {
+	font-size: 200px;
+	color: blue;
+	text-align: center;
+	line-height: 180px;
+}
+
+.x {
+	font-size: 200px;
+	color: red;
+	text-align: center;
+	line-height: 180px;
+}
+
+.limpiar {
+	background: #ddd;
+}
