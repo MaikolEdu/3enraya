@@ -141,7 +141,7 @@ var tres = {
 	
 	max: function() {
 		if(tres.finPartida()){
-			if(tres.ganarPartida()!=-1)  return -1;
+			if(tres.ganar()!=-1)  return -1;
 			else return 0;
 		}
 		var v =-1;
