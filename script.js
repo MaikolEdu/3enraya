@@ -51,11 +51,10 @@ var tres = {
 
 			if ( tres.ganador == -1 ) {
 				tres.matriz[$fila][$columna] = 0;
+
+				tres.ganador = tres.ganar();
+				tres.ponerFichaPC();
 			}
-
-			tres.ganar();
-
-			tres.ponerFichaPC();
 		}
 
 		console.log(tres.matriz);
