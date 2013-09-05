@@ -26,7 +26,6 @@ var tres = {
 	},
 
 	empezar: function() {
-		
 		for(var i = 0; i < tres.tamano; i++) {
 			tres.matriz[i] = []
 			for(var j = 0; j < tres.tamano; j++) {
@@ -56,6 +55,8 @@ var tres = {
 		}
 
 		tres.ganar();
+
+		tres.ponerFichaPC();
 
 		console.log(tres.matriz);
 	},
@@ -87,19 +88,19 @@ var tres = {
 	},
 
 	finPartida: function() {
-		return tableroCompleto | tres.ganar != -1;
+		return tableroCompleto || tres.ganar != -1;
 	},
 
 	ponerFichaPC: function() {
-		if (!finPartida) {
+		if (tres.finPartida) {
 			var f = 0,
 				c = 0,
 				v = -1;
 
 			for(var i = 0; i < tres.tamano; i++ ) {
 				for(var j = 0; j < tres.tamano; j++ ) {
-					if ( matriz[i][j] == -1 ) {
-						matriz[i][j] == 1;
+					if ( tres.matriz[i][j] == -1 ) {
+						tres.matriz[i][j] == 1;
 						var aux = tres.min();
 						if (aux > v) {
 							v = aux;
@@ -112,9 +113,31 @@ var tres = {
 				}
 			}
 			matriz[f][c] = 1;
+			console.log(matriz[f][c]);
 		}
-		ganador = ganar();
+		ganador = tres.ganar();
+		console.log('asdasd');
+	},
+	
+	max: function() {
+		if(tres.finPartida()){
+			if(tres.ganarPartida()!=-1)  return -1;
+			else return 0;
+		}
+		var v =-1;
+		for (var n=0; n<tres.tamano; n++) {
+			for (var m=0; m<tres.tamano; m++) {
+				if (tres.matriz[n][m]==-1) {
+					tres.matriz[n][m] = 1;
+					var aux = tres.min();
+					if (aux>v) v=aux;
+					tres.matriz[n][m] = -1;
+				}
+			}
+		}
+		return v;
 	}
+	
 };
 
 
