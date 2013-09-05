@@ -25,8 +25,7 @@ var tres = {
 		tres.empezar();
 	},
 
-	empezar: function () {
-
+	empezar: function() {
 		for(var i = 0; i < tres.tamano; i++) {
 			tres.matriz[i] = []
 			for(var j = 0; j < tres.tamano; j++) {
@@ -39,7 +38,7 @@ var tres = {
 		console.log(tres.matriz);
 	},
 
-	pulsar: function () {
+	pulsar: function() {
 		$fila = $(this).data('fila');
 		$columna = $(this).data('columna');
 
@@ -56,6 +55,8 @@ var tres = {
 		}
 
 		tres.ganar();
+
+		tres.ponerFichaPC();
 
 		console.log(tres.matriz);
 	},
@@ -76,6 +77,47 @@ var tres = {
 			}
 		}
 		return -1;
+	},
+
+	tableroCompleto: function() {
+		for (var i = 0; i < tres.tamano; i++)
+			for (var j = 0; j < tres.tamano; j++)
+				if (tres.matriz[i][j]==-1) 
+					return false;
+		return true;
+	},
+
+	finPartida: function() {
+		return tres.tableroCompleto || tres.ganar != -1;
+	},
+
+	ponerFichaPC: function() {
+		if (tres.finPartida) {
+			var f = 0,
+				c = 0,
+				v = -1;
+
+			for(var i = 0; i < tres.tamano; i++ ) {
+				for(var j = 0; j < tres.tamano; j++ ) {
+					if ( tres.matriz[i][j] == -1 ) {
+						tres.matriz[i][j] == 1;
+						var aux = tres.min();
+						if (aux > v) {
+							v = aux;
+							f = i;
+							c = j;
+						}
+						tres.matriz[i][j] = -1;
+					}
+					tres.matriz[i][j] = 1;
+				}
+			}
+			tres.matriz[f][c] = 1;
+			console.log(tres.matriz[f][c]);
+		}
+		ganador = tres.ganar();
+		console.log('asdasd');
+
 	},
 
 	min: function(){
