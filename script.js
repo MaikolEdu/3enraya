@@ -77,7 +77,7 @@ var tres = {
 
 		}
 	    return -1;	
-	}
+	},
 	
 	max: function() {
 		if(tres.finPartida()){
