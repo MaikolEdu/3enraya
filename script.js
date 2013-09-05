@@ -4,19 +4,7 @@ $(document).ready(function(){
 
 	$('.limpiar').on('click', tres.constructor);
 
-	$('.limpiar').on('click', tres.empezar);
-
 });
-
-// function pintar() {
-// 	$this = $(this);
-
-// 	if ( $this.text() == '' ) {
-// 		$this.text('o');
-// 		$this.addClass('o');
-// 	}
-
-// }
 
 var tres = {
 	tamano: 3,
@@ -26,7 +14,7 @@ var tres = {
 	matriz: [],
 
 	constructor: function limpiar() {
-		$('.cuadrado').each(function(i){
+		$('.cuadrado').each(function(){
 			$(this).removeClass('o');
 			$(this).removeClass('x');
 			$(this).text("");
@@ -45,13 +33,21 @@ var tres = {
 		}
 
 		tres.ganador = -1;
-
-		// console.log(tres.matriz);
 	},
 
 	pulsar: function pulsaBoton() {
 		$fila = $(this).data('fila');
 		$columna = $(this).data('columna');
+
+		$this = $(this);
+
+		if ( $this.text() == '' ) {
+
+			$('.limpiar').on('click', tres.constructor);
+			$this.text('o');
+			$this.addClass('o');
+		}
+
 		console.log($(this).data());
 	}
 };
