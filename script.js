@@ -39,7 +39,7 @@ var tres = {
 		console.log(tres.matriz);
 	},
 
-	pulsar: function pulsaBoton(event) {
+	pulsar: function pulsaBoton() {
 		$fila = $(this).data('fila');
 		$columna = $(this).data('columna');
 
@@ -61,7 +61,21 @@ var tres = {
 	},
 
 	ganar: function() {
-		
+		if(tres.matriz[0][0] != -1 && tres.matriz[0][0] == tres.matriz[1][1] && tres.matriz[0][0] == tres.matriz[2][2]) {
+			return tres.matriz[0][0];
+		}
+		if(tres.matriz[0][2] != -1 && tres.matriz[0][2] == tres.matriz[1][1] && tres.matriz[0][2] == tres.matriz[2][0]) {
+			return tres.matriz[0][2];
+		}
+		for (var i = 0; i < tres.tamano; i++) {
+			if(tres.matriz[i][2] == -1 && tres.matriz[i][2]==tres.matriz[i][1] && tres.matriz[i][2]==tres.matriz[i][0] ) {
+				return tres.matriz[i][2];
+			}
+			if(tres.matriz[0][i] == -1 && tres.matriz[0][i]==tres.matriz[1][i] && tres.matriz[0][i]==tres.matriz[2][i] ) {
+				return tres.matriz[0][i];
+			}
+			return -1;
+		}
 	}
 };
 
