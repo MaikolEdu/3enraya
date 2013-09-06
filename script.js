@@ -35,12 +35,14 @@ var tres = {
 
 		tres.ganador = -1;
 
+		tres.contar = 0;
+
 		console.log(tres.matriz);
 	},
 
 	pulsar: function() {
-		$fila = $(this).data('fila');
-		$columna = $(this).data('columna');
+		var $fila = $(this).data('fila');
+		var $columna = $(this).data('columna');
 
 		$this = $(this);
 
@@ -54,10 +56,13 @@ var tres = {
 
 				tres.ganador = tres.ganar();
 				tres.ponerFichaPC();
+
+				console.log('estoy pulsando');
 			}
 		}
 
 		console.log(tres.matriz);
+
 	},
 
 	ganar: function() {
@@ -99,7 +104,7 @@ var tres = {
 			for(var i = 0; i < tres.tamano; i++ ) {
 				for(var j = 0; j < tres.tamano; j++ ) {
 					if ( tres.matriz[i][j] == -1 ) {
-						tres.matriz[i][j] == 1;
+						tres.matriz[i][j] = 1;
 						var aux = tres.min();
 						if (aux > v) {
 							v = aux;
@@ -108,34 +113,14 @@ var tres = {
 						}
 						tres.matriz[i][j] = -1;
 					}
-					tres.matriz[i][j] = 1;
 				}
 			}
 			tres.matriz[f][c] = 1;
 			console.log(f,c);
 		}
-		ganador = tres.ganar();
-		console.log(ganador);
+		tres.ganador = tres.ganar();
+		console.log(tres.ganador);
 
-	},
-
-	min: function(){
-		if (tres.finPartida()) {
-			if (tres.ganar()!=-1) return 1;
-			else return 0;
-		}
-		var v=99;
-		for (var i = 0; i < tres.tamano; i++) {
-			for (var j = 0; j < tres.tamano; j++) {
-				if (tres.matriz[i][j]==-1) {
-					tres.matriz[i][j] = 0;
-					aux = tres.max();
-					if (aux<v) v=aux;
-					tres.matriz[i][j] = -1;
-				}
-			}
-		}
-	    return -1;	
 	},
 	
 	max: function() {
@@ -155,6 +140,25 @@ var tres = {
 			}
 		}
 		return v;
+	},
+
+	min: function(){
+		if (tres.finPartida()) {
+			if (tres.ganar()!=-1) return 1;
+			else return 0;
+		}
+		var v=99;
+		for (var i = 0; i < tres.tamano; i++) {
+			for (var j = 0; j < tres.tamano; j++) {
+				if (tres.matriz[i][j]==-1) {
+					tres.matriz[i][j] = 0;
+					var aux = tres.max();
+					if (aux<v) v=aux;
+					tres.matriz[i][j] = -1;
+				}
+			}
+		}
+	    return v;	
 	}
 	
 };
