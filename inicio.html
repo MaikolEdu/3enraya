@@ -4,21 +4,142 @@
 	<meta charset="UTF-8">
 	<title>Tres en raya</title>
 	<link rel="stylesheet" href="estilos.css">
+
 </head>
 <body>
-	<div data-fila="0" data-columna="0" class="cuadrado"></div>
-	<div data-fila="0" data-columna="1" class="cuadrado"></div>
-	<div data-fila="0" data-columna="2" class="cuadrado"></div>
-	<div data-fila="1" data-columna="0" class="cuadrado"></div>
-	<div data-fila="1" data-columna="1" class="cuadrado"></div>
-	<div data-fila="1" data-columna="2" class="cuadrado"></div>
-	<div data-fila="2" data-columna="0" class="cuadrado"></div>
-	<div data-fila="2" data-columna="1" class="cuadrado"></div>
-	<div data-fila="2" data-columna="2" class="cuadrado"></div>
+<div id = "barra">
+	<h1>Tres en Raya</h1>
+</div>
+	<div >
+			<div id="tablero">
+				<div data-fila="0" data-columna="0" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="0" data-columna="1" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="0" data-columna="2" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="1" data-columna="0" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="1" data-columna="1" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="1" data-columna="2" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="2" data-columna="0" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="2" data-columna="1" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="2" data-columna="2" class="cuadrado"><figure><img src=""></figure></div>
+			</div>		
+		
+			<div id="imagenes">
+				<h2>Elige una imagen</h2>
+				<figure id="i1"><img src="i1.png"></figure>
+				<figure id="i2"><img src="i2.png"></figure>
+				<figure id="i3"><img src="i3.png"></figure>
+				<figure id="i4"><img src="i4.png"></figure>
+				<figure id="i5"><img src="i5.png"></figure>
+				<figure id="i6"><img src="i6.png"></figure>
+			</div>		
+	</div>
+	
+	<div class="inferior">
+		<div class="bloque">
+			<div id="foto-pc"> <figure><img src="pc.png"></figure></div>
+			<div id="datospc">
+				<span >Victorias : </span>
+				<p >Derrotas :</p>
+				<p >Empates : </p>
+			</div>
+		</div>
+		<div class="bloque">
+			<p><a class= "limpiar">Reanudar Juego</a></p>		
+		</div>
+		
+		<div class="bloque">
+			<div id="foto-yo">
+				<figure><img src=""></figure>
+			</div>
+			<div id="datosyo">
+				<span >Victorias : </span>
+				<p >Derrotas :</p>
+				<p >Empates : </p>
+			</div>
+		</div>
+	</div>
 
-	<button class="limpiar">Empezar otro juego</button>
+	<h2 id="mensaje"></h2>
 
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="script.js"></script>
+	<script>
+		$(document).ready(function(){
+			var pc = 0;
+			var yo = 0;
+			var col,temp;
+			tres = new TresEnRaya();
+			tres.constructor();
+			$('.cuadrado').on('click', pulsa);
+			$('.limpiar').on("click",limpiar);
+			$('#imagenes figure').on("click", cambiarImagen);
+
+			function limpiar(){
+				
+				$('.cuadrado').each(function(){
+					$(this).html('<figure><img src=""/></figure> ');
+					tres.constructor()
+				});
+	
+				$('#mensaje').text("");
+			}
+
+			function pulsa(){
+				console.log($(this));
+
+				if (col){
+				var d = $(this.firstElementChild.firstElementChild);
+				if(!d.attr("src")){
+				    d.attr("src", col + ".png");
+					temp = col;
+					console.log(d.attr("src"));
+					var fila = $(this).data('fila');
+					var columna = $(this).data('columna');
+					tres.pulsaBoton(fila,columna);
+					if (tres.finPartida()){
+						if(tres.ganador == -1){
+							$('#mensaje').text('Empate');
+							alert("EMPATE");
+							limpiar();
+						}
+						if(tres.ganador == 0){
+							$('#mensaje').text('Has Ganado');
+							alert("HAS GANADOO");
+							yo = yo + 1;
+							limpiar();
+						}	
+						if(tres.ganador == 1){
+							$('#mensaje').text('Has Perdido');
+							alert("HAS PERDIDOO");
+							pc = pc + 1;
+							limpiar();
+						}
+					}
+				}
+			}
+			else{
+				alert("Elije tu Ficha");
+			}
+
+
+		}
+		function cambiarImagen(datos)
+		{
+			col = datos.currentTarget.id;
+			$("#foto-yo figure img").attr("src", col + ".png");
+			$(".cuadrado figure img").each(function(){
+				console.log($(this));
+				if($(this).attr("src")==temp){
+					this.attr("src", col + ".png");
+				}
+			});
+			
+			
+		}
+
+		});
+
+		
+	</script>
 </body>
 </html>

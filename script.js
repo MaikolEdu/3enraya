@@ -1,166 +1,145 @@
-$(document).ready(function(){
 
-	tres.empezar();
 
-	$('.cuadrado').on('click', tres.pulsar);
+function TresEnRaya(){
+	this.tam = 3;
+	this.tablero = [];
+	this.ganador = -1;
+	this.contar = 0;
 
-	$('.limpiar').on('click', tres.constructor);
+	this.constructor=function(){
+		this.empezarPartida();
+		this.contar = 0;
+	}
 
-});
+	this.getGanador=function(){
+		return this.ganador;
+	}
 
-var tres = {
-	tamano: 3,
-	ganador: -1,
-	contar: 0,
-
-	matriz: [],
-
-	constructor: function() {
-		$('.cuadrado').each(function(){
-			$(this).removeClass('o');
-			$(this).removeClass('x');
-			$(this).text("");
-		});
-
-		tres.empezar();
-	},
-
-	empezar: function() {
-		for(var i = 0; i < tres.tamano; i++) {
-			tres.matriz[i] = []
-			for(var j = 0; j < tres.tamano; j++) {
-				tres.matriz[i][j] = -1;
+	this.empezarPartida=function(){
+		for(var i = 0; i < this.tam; i++) {
+			this.tablero[i] = []
+			for(var j = 0; j < this.tam; j++) {
+				this.tablero[i][j] = -1;
 			}
 		}
-
-		tres.ganador = -1;
-
-		tres.contar = 0;
-
-		console.log(tres.matriz);
-	},
-
-	pulsar: function() {
-		var $fila = $(this).data('fila');
-		var $columna = $(this).data('columna');
-
-		$this = $(this);
-
-		if ( tres.matriz[$fila][$columna] == -1 ) {
-			// event.preventDefault();
-			$this.text('o');
-			$this.addClass('o');
-
-			if ( tres.ganador == -1 ) {
-				tres.matriz[$fila][$columna] = 0;
-
-				tres.ganador = tres.ganar();
-				tres.ponerFichaPC();
-
-				console.log('estoy pulsando');
+		this.ganador = -1;
+	}
+		
+	this.pulsaBoton=function(n,m){
+		
+		if (this.tablero[n][m]==-1){
+			if(this.ganador == -1){
+				this.tablero[n][m]=0;
+				this.ganador = this.ganaPartida();
+				this.ponerFichaPC();
 			}
 		}
+	}
 
-		console.log(tres.matriz);
-
-	},
-
-	ganar: function() {
-		if(tres.matriz[0][0] != -1 && tres.matriz[0][0] == tres.matriz[1][1] && tres.matriz[0][0] == tres.matriz[2][2]) {
-			return tres.matriz[0][0];
+	this.ganaPartida=function(){
+		if(this.tablero[0][0] != -1 && this.tablero[0][0] == this.tablero[1][1] && this.tablero[0][0] == this.tablero[2][2]){
+			return this.tablero[0][0];
 		}
-		if(tres.matriz[0][2] != -1 && tres.matriz[0][2] == tres.matriz[1][1] && tres.matriz[0][2] == tres.matriz[2][0]) {
-			return tres.matriz[0][2];
+		if(this.tablero[0][2] != -1 && this.tablero[0][2] == this.tablero[1][1] && this.tablero[0][2] == this.tablero[2][0]){
+			return this.tablero[0][2];
 		}
-		for (var i = 0; i < tres.tamano; i++) {
-			if(tres.matriz[i][2] == -1 && tres.matriz[i][2]==tres.matriz[i][1] && tres.matriz[i][2]==tres.matriz[i][0] ) {
-				return tres.matriz[i][2];
+		for (var i = 0; i < this.tam; i++) {
+			if (this.tablero[i][2] != -1 && this.tablero[i][2] == this.tablero[i][1] && this.tablero[i][2]==this.tablero[i][0]){
+				return this.tablero[i][2];
 			}
-			if(tres.matriz[0][i] == -1 && tres.matriz[0][i]==tres.matriz[1][i] && tres.matriz[0][i]==tres.matriz[2][i] ) {
-				return tres.matriz[0][i];
-			}
+			if (this.tablero[0][i] != -1 && this.tablero[0][i] == this.tablero[1][i] && this.tablero[0][i]==this.tablero[2][i]){
+				return this.tablero[0][i];
+			}	
 		}
 		return -1;
-	},
+	}
 
-	tableroCompleto: function() {
-		for (var i = 0; i < tres.tamano; i++)
-			for (var j = 0; j < tres.tamano; j++)
-				if (tres.matriz[i][j]==-1) 
-					return false;
-		return true;
-	},
-
-	finPartida: function() {
-		return tres.tableroCompleto() || tres.ganar() != -1;
-	},
-
-	ponerFichaPC: function() {
-		if (!tres.finPartida()) {
-			var f = 0,
-				c = 0,
-				v = -1;
-
-			for(var i = 0; i < tres.tamano; i++ ) {
-				for(var j = 0; j < tres.tamano; j++ ) {
-					if ( tres.matriz[i][j] == -1 ) {
-						tres.matriz[i][j] = 1;
-						var aux = tres.min();
-						if (aux > v) {
+	this.ponerFichaPC=function(){
+		if(!this.finPartida()){
+			var f = 0 , c = 0 , v = -1;
+			for(var i=0 ; i<this.tam ; i++){
+				for(var j=0; j<this.tam; j++){
+					if(this.tablero[i][j] == -1){
+						this.tablero[i][j] = 1;
+						var aux = this.min();
+						if(aux>v){
 							v = aux;
 							f = i;
 							c = j;
 						}
-						tres.matriz[i][j] = -1;
+						this.tablero[i][j] = -1;
 					}
 				}
 			}
-			tres.matriz[f][c] = 1;
-			console.log(f,c);
+			this.tablero[f][c] = 1;
+			
+			$('.cuadrado').each(function(){
+				if ($(this).data('fila') == f && $(this).data('columna') == c){
+ 					var d = $(this.firstElementChild.firstElementChild);
+				    d.attr("src","pc.png")
+				}
+			});
 		}
-		tres.ganador = tres.ganar();
-		console.log(tres.ganador);
+		this.ganador = this.ganaPartida();
+	}
 
-	},
-	
-	max: function() {
-		if(tres.finPartida()){
-			if(tres.ganar()!=-1)  return -1;
-			else return 0;
+	this.finPartida=function(){
+		return this.tableroCompleto() || this.ganaPartida() != -1;
+	}
+
+	this.tableroCompleto=function(){
+		for(var i=0 ; i<this.tam; i++)
+			for(var j = 0 ; j<this.tam; j++){
+				if(this.tablero[i][j] == -1)
+					return false;
+			}
+				
+		return true;
+	}
+
+	this.min=function(){
+		if(this.finPartida()){
+			if(this.ganaPartida() != -1)
+				return 1;
+			else
+				return 0;
 		}
-		var v =-1;
-		for (var n=0; n<tres.tamano; n++) {
-			for (var m=0; m<tres.tamano; m++) {
-				if (tres.matriz[n][m]==-1) {
-					tres.matriz[n][m] = 1;
-					var aux = tres.min();
-					if (aux>v) v=aux;
-					tres.matriz[n][m] = -1;
+		var v = 99;
+		for(var i = 0; i<this.tam; i++){
+			for(var j=0 ; j<this.tam; j++){
+				if(this.tablero[i][j] == -1){
+					this.tablero[i][j] = 0;
+					var aux = this.max();
+					if (aux < v)
+						v = aux;
+					this.tablero[i][j] = -1;
 				}
 			}
 		}
 		return v;
-	},
+	}
 
-	min: function(){
-		if (tres.finPartida()) {
-			if (tres.ganar()!=-1) return 1;
-			else return 0;
+	this.max=function(){
+		if(this.finPartida()){
+			if(this.ganaPartida() != -1)
+				return -1;
+			else
+				return 0;
 		}
-		var v=99;
-		for (var i = 0; i < tres.tamano; i++) {
-			for (var j = 0; j < tres.tamano; j++) {
-				if (tres.matriz[i][j]==-1) {
-					tres.matriz[i][j] = 0;
-					var aux = tres.max();
-					if (aux<v) v=aux;
-					tres.matriz[i][j] = -1;
+		var v = -1;
+		for(var i = 0; i<this.tam; i++){
+			for(var j = 0; j<this.tam; j++){
+				if(this.tablero[i][j] == -1){
+					this.tablero[i][j] = 1;
+					var aux = this.min();
+					if (aux > v)
+						v = aux;
+					this.tablero[i][j] = -1;
 				}
 			}
 		}
-	    return v;	
+		return v;
 	}
+
 	
-};
-
-
+}
