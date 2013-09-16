@@ -12,7 +12,9 @@
 </div>
 	<div >
 			<div id="tablero">
-				<div data-fila="0" data-columna="0" class="cuadrado"><figure><img src=""></figure></div>
+				<div data-fila="0" data-columna="0" class="cuadrado">
+					<figure><img src=""></figure>
+				</div>
 				<div data-fila="0" data-columna="1" class="cuadrado"><figure><img src=""></figure></div>
 				<div data-fila="0" data-columna="2" class="cuadrado"><figure><img src=""></figure></div>
 				<div data-fila="1" data-columna="0" class="cuadrado"><figure><img src=""></figure></div>
@@ -123,19 +125,41 @@
 
 
 		}
+
+
 		function cambiarImagen(datos)
 		{
 			col = datos.currentTarget.id;
 			$("#foto-yo figure img").attr("src", col + ".png");
-			$(".cuadrado figure img").each(function(){
-				console.log($(this));
-				if($(this).attr("src")==temp){
-					this.attr("src", col + ".png");
+			$(".cuadrado").each(function(){
+				var imagen = $(this).find('img').attr('src');
+				if (imagen) {
+					console.log(this);
+					if (imagen != 'pc.png') {
+						console.log('Aqui voy a cambiar');
+						$(this).find('img').attr('src', col + '.png');
+					}
 				}
 			});
 			
 			
 		}
+
+
+
+		// function cambiarImagen(datos)
+		// {
+		// 	col = datos.currentTarget.id;
+		// 	$("#foto-yo figure img").attr("src", col + ".png");
+		// 	$(".cuadrado figure img").each(function(){
+		// 		console.log($(this));
+		// 		if($(this).attr("src")==temp){
+		// 			this.attr("src", col + ".png");
+		// 		}
+		// 	});
+			
+			
+		// }
 
 		});
 

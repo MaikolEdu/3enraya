@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body
 {
 	background: url("fondo.jpg");
@@ -42,24 +46,14 @@ a:hover
 
 #tablero {
 	background: green;
-	box-shadow: rgba(0,0,0,0.6) 0px 0px 0;
-	height: 392px;
-    margin: 30px;
-	width: 30%;
+	/*box-shadow: rgba(0,0,0,0.6) 0px 0px 0;*/
+	/*height: 30%;*/
+    /*margin: 30px;*/
+	width: 45%;
 }
 
-#imagenes{
-	background: rgba(0,60,0,0.5);
-	border-radius: 0.5em;
-	color: #333;
-	height: 392px;
-	margin: 30px;
-	width: 30%;
-	
-}
 .cuadrado {
-	width: 120px;
-	height: 120px;
+	width: 30%;
 	display: inline-block;
 	vertical-align: top;
 	background: white;
@@ -67,11 +61,27 @@ a:hover
 }
 
 .cuadrado figure {
-	width: 120px;
-	height: 120px;
+	width: 90%;
+	height: 90%;
 	text-align: center;
-	line-height: 110px;
+	margin: 5%;
+	padding: 0;
+	border: none;
 }
+.cuadrado figure img {
+	
+}
+
+#imagenes{
+	background: rgba(0,60,0,0.5);
+	border-radius: 0.5em;
+	color: #333;
+	height: 30%;
+	margin: 30px;
+	width: 30%;
+	
+}
+
 
 .inferior{
 	margin: 0 2em;

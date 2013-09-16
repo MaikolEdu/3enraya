@@ -1,3 +1,10 @@
+$('document').ready(function() {
+
+	var width = $('.cuadrado').width();
+	$('.cuadrado').height(width);
+
+});
+
 
 
 function TresEnRaya(){
